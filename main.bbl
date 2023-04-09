@@ -24,13 +24,16 @@
 \providecommand{\bibdate}[1]{#1}
 \providecommand{\biburl}[1]{\newline\url{#1}}
 
-\bibitem{kuhn2004man}
-\bibauthor{KUHN R}\@. \bibbooktitle{The Man who Changed China: The Life and Legacy of Jiang Zemin}\bibmark{[M]}\@. \bibaddress{[S.l.]}\thinspace{}\textnormal{: }\bibpublisher{Crown Publishers}\@, \bibyear{2004}\@.
+\bibitem{edelsbrunner2000smoothing}
+\bibauthor{EDELSBRUNNER H\@, LI X-Y\@, MILLER G, et~al}\@. \bibtitle{Smoothing and cleaning up slivers}\bibmark{[A]}\@. \bibbooktitle{Proceedings of the thirty-second annual ACM symposium on Theory of computing}[C]\@, \bibyear{2000}\thinspace{}\textnormal{: }\bibpages{273\thinspace{}\textnormal{--}\thinspace{}277}\@.
 
-\bibitem{江泽民1989能源发展趋势及主要节能措施}
-\bibauthor{江泽民}\@. \bibtitle{能源发展趋势及主要节能措施}\bibmark{[J]}\@. \bibjournal{上海交通大学学报}\@, \bibyear{1989}\@, \bibvolume{23}\bibnumber{(3)}\thinspace{}\textnormal{: }\bibpages{1\thinspace{}\textnormal{--}\thinspace{}16}\@.
+\bibitem{eberly2008triangulation}
+\bibauthor{EBERLY D}\@. \bibtitle{Triangulation by ear clipping}\bibmark{[J]}\@. \bibjournal{Geometric Tools}\@, \bibyear{2008}\thinspace{}\textnormal{: }\bibpages{2002\thinspace{}\textnormal{--}\thinspace{}2005}\@.
 
-\bibitem{江泽民2008新时期我国信息技术产业的发展}
-\bibauthor{江泽民}\@. \bibtitle{新时期我国信息技术产业的发展}\bibmark{[J]}\@. \bibjournal{上海交通大学学报}\@, \bibyear{2008}\@, \bibvolume{42}\bibnumber{(10)}\thinspace{}\textnormal{: }\bibpages{1589\thinspace{}\textnormal{--}\thinspace{}1607}\@.
+\bibitem{闵卫东1995二维任意域内点集的Delaunay三角划分生成算法}
+\bibauthor{闵卫东\@, 唐泽圣}\@. \bibtitle{二维任意域内点集的Delaunay 三角划分生成算法}\bibmark{[J]}\@. \bibjournal{计算机学报}\@, \bibyear{1995}\@, \bibvolume{18}\bibnumber{(5)}\thinspace{}\textnormal{: }\bibpages{365\thinspace{}\textnormal{--}\thinspace{}371}\@.
+
+\bibitem{lee1980two}
+\bibauthor{LEE D-T\@, SCHACHTER B~J}\@. \bibtitle{Two algorithms for constructing a Delaunay triangulation}\bibmark{[J]}\@. \bibjournal{International Journal of Computer \& Information Sciences}\@, \bibyear{1980}\@, \bibvolume{9}\bibnumber{(3)}\thinspace{}\textnormal{: }\bibpages{219\thinspace{}\textnormal{--}\thinspace{}242}\@.
 
 \end{thebibliography}
