@@ -31,9 +31,9 @@ Delaunay triangulation（简称DT）是一种三角剖分方式，其结果满�
     \item 若点集中任意四点均不共圆，则产生的三角剖分唯一。
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]
+    \includegraphics[width=0.4\textwidth]
     {figures/triangulation-1.png}
     \caption{DT示例}
 \end{figure}
@@ -42,85 +42,97 @@ Delaunay triangulation（简称DT）是一种三角剖分方式，其结果满�
 
 一种利用分治思想在\(O(n\log n)\)复杂度内计算点集的Delaunay triangulation方法如下：
 
-首先将给定点集按照 x 坐标升序排列，如下图所示。
-\begin{figure}[h]
+首先将给定点集按照 x 坐标升序排列，如图~\ref*{DT1}所示。
+
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]
     {figures/DT1.png}
     \caption{排好序的大小为10的点集}
+    \label{DT1}
 \end{figure}
-
+\newpage
 一旦点集有序，我们就可以不断地将其平分成两个部分，直到子点集大小不超过 3。然后这些子点集可以立刻剖分为一个三角形或线段。
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT2.png}
-    \caption{分治为包含2或3个点的点集}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT2.png}
+        \caption{分治为包含2或3个点的点集}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT3.png}
+        \caption{三种不同的边}
+        \label{DT3}
+    \end{minipage}
 \end{figure}
 
-在分治回溯的过程中，已经剖分好的左右子点集可以依次合并。合并后的剖分包含 LL-edge（左侧子点集的边）。RR-edge（右侧子点集的边），LR-edge（连接左右剖分产生的新的边），如图 LL-edge（灰色），RR-edge（红色），LR-edge（蓝色）。对于合并后的剖分，为了维持 DT 性质，我们可能需要删除部分 LL-edge 和 RR-edge，但我们在合并时不会增加 LL-edge 和 RR-edge。
+在分治回溯的过程中，已经剖分好的左右子点集可以依次合并。合并后的剖分包含 LL-edge（左侧子点集的边）。RR-edge（右侧子点集的边），LR-edge（连接左右剖分产生的新的边），如图~\ref*{DT3} LL-edge（灰色），RR-edge（红色），LR-edge（蓝色）。对于合并后的剖分，为了维持 DT 性质，我们可能需要删除部分 LL-edge 和 RR-edge，但我们在合并时不会增加 LL-edge 和 RR-edge。
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT3.png}
-    \caption{三种不同的边}
-\end{figure}
 
 合并左右两个剖分的第一步是插入 base LR-edge，base LR-edge 是最底部的不与任何LL-edge 及 RR-edge 相交的 LR-edge。
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT4.png}
-    \caption{合并左右剖分}
-\end{figure}
 
 然后，我们需要确定下一条紧接在base LR-edge 之上的 LR-edge。比如对于右侧点集，下一条 LR-edge 的可能端点（右端点）为与 base LR-edge 右端点相连的 RR-edge 的另一端点（6, 7, 9 号点），左端点即为 2 号点。
-
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT5.png}
-    \caption{下一条LR-edge的可能位置}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT4.png}
+        \caption{合并左右剖分}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT5.png}
+        \caption{下一条LR-edge的可能位置}
+    \end{minipage}
 \end{figure}
 
 对于可能的端点，我们需要按以下两个标准检验：
+
 \begin{enumerate}
     \item 其对应 RR-edge 与 base LR-edge 的夹角小于 180 度。
     \item base LR-edge 两端点和这个可能点三点构成的圆内不包含任何其它可能点。
 \end{enumerate}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT6.png}
-    \caption{检验可能点}
-\end{figure}
-
-如上图，6 号可能点所对应的绿色圆包含了 9 号可能点，而 7 号可能点对应的紫色圆则不包含任何其它可能点，故 7 号点为下一条 LR-edge 的右端点。
+如图~\ref*{DT6}，6 号可能点所对应的绿色圆包含了 9 号可能点，而 7 号可能点对应的紫色圆则不包含任何其它可能点，故 7 号点为下一条 LR-edge 的右端点。
 
 对于左侧点集，我们做镜像处理即可。
-
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT7.png}
-    \caption{镜像处理另一半点集}
-\end{figure}
 
 当左右点集都不再含有符合标准的可能点时，合并即完成。当一个可能点符合标准，一条 LR-edge 就需要被添加，对于与需要添加的 LR-edge 相交的 LL-edge 和 RR-edge，将其删除。
 
 当左右点集均存在可能点时，判断左边点所对应圆是否包含右边点，若包含则不符合；对于右边点也是同样的判断。在未出现四点共圆的情况下每次只会有一个可能点符合标准，否则任选其一即可。
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]
-    {figures/DT8.png}
-    \caption{下一条LR-edge}
+    \begin{minipage}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT6.png}
+        \caption{检验可能点}
+        \label{DT6}
+    \end{minipage}
+    \begin{minipage}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT7.png}
+        \caption{镜像处理另一半点集}
+    \end{minipage}
+    \begin{minipage}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+        {figures/DT8.png}
+        \caption{下一条LR-edge}
+    \end{minipage}
 \end{figure}
+
+
 
 重复以上步骤即可完成Delaunay triangulation的构建。
 
