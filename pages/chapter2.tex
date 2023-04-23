@@ -4,12 +4,18 @@
 
 \section{概述}
 凸多边形\footnote{每个内角均小于\(180°\)的多边形}是平面多边形中最简单最易处理的一类。
-定义一个多边形S 满足
-对于一个凸多边形\(S\)，存在多种方案将其分割为n-2个三角形。其中Delaunay划分可以生成满足最小角最大特性，细长三角形较少的优秀划分方案。
+
+我们的算法将一步步简化待分解的多边形，因此我们从最基础的凸多边形开始探讨。
 
 \section{朴素的划分方案}
 
 由于凸多边形的性质，多边形任意两个顶点之间连边均在多边形内部。因此最简单的划分方案即为 对于\(i\in [2,n-2]\)，沿边\(S_0,S_i\)进行一次分割，即可产生总共n-2个三角形。该方案最为简便，且产生的三角形均有一个共同顶点，但产生的三角形形状均为细长型，相对形态较劣。
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.5\textwidth]
+    {figures/凸多边形1.png}
+    \caption{最简单的一种三角划分策略}
+  \end{figure}
 
 \section{改进的朴素划分}
 
@@ -21,7 +27,14 @@
     \item 对分割出的两个子多边形调用本算法进行分割，并将分割的结果加入答案。
 \end{itemize}
 
-该方案仍然有较大优化空间，例如选择点对进行分割时可以选择多边形较短的轴进行切割以使两部分更加规整，但实际应用中优化意义不甚显著，且计算复杂度大幅增加。
+沿着这个方向，该方案仍然有一定的优化空间。我们若倾向于每次尽可能的将多边形分割为面积相似，形状接近圆形的两个部分，分割的最终结果将会更加优秀。但是该方案代价相对较大，且最终产生的结果相比于随机法并没有显著的提升。
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.5\textwidth]
+    {figures/random.png}
+    \caption{经过随机化优化后的分割结果}
+  \end{figure}
 
 \section{完美三角剖分}
 Delaunay triangulation（简称DT）是一种三角剖分方式，其结果满足以下性质：
@@ -35,7 +48,7 @@ Delaunay triangulation（简称DT）是一种三角剖分方式，其结果满�
     \centering
     \includegraphics[width=0.4\textwidth]
     {figures/triangulation-1.png}
-    \caption{DT示例}
+    \caption{Delaunay triangulation的分割结果}
 \end{figure}
 
 若进行三角剖分的点集中存在四点共圆，虽然计算其Delaunay triangulation时得到的结果不唯一，但仍不破坏其余性质。由于最小角最大的特性，DT可以产生理论最优的划分。而根据三角剖分的性质，对凸多边形顶点点集进行三角剖分所得到的三角形集合即为待求的三角化结果。
