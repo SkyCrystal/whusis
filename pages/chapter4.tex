@@ -1,6 +1,65 @@
 % Chapter 4
 
-\chapter{实验验证}
+\chapter{代码结果及实验验证}
+
+我们分别采用手工构造和随机生成的数据对算法进行测试。
+
+考虑到对凸多边形的三角划分有确定性的最优解，为了便于对比，我们的代码实现在所有子多边形均为凸多边形后即产生输出。
+
+图\ref*{polygon}是手工构造的一组测试用例，具有大量互相嵌套，位置关系复杂的孔洞。我们将主要通过本组数据对算法进行测试。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]
+        {figures/polygon.png}
+        \caption{具有多个复杂孔洞的多边形}
+        \label{polygon}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]
+        {figures/mergehole1.png}
+        \caption{对多边形的孔洞进行消除}
+        \label{mergehole}
+    \end{minipage}
+\end{figure}
+首先，如图\ref*{mergehole},算法对多边形的所有孔洞进行合并。
+通过数次切割，所有的内部孔洞通过一条宽度为0的桥与多边形外界相连，多边形的所有边界合并为一体，以便于接下来的处理操作。
+
+在这一步，经测试发现，合并方式的不同对最终结果并没有非常大的影响。
+究其原因是，略经优化后的朴素做法所选择的边并不会特别差；而少数相对较差的边即使在合并孔洞这一步未被选中，在接下来的初步分割或是最后的Delaunay三角网生成中仍然大概率作为一条切割边。而朴素算法相比于准确的计算出总长最短的切割边，可以较大程度的节省运算所耗时间。
+
+在完成对多边形孔洞的合并之后，我们便可以开始对凹多边形进行分割了。在此步，我们的目标是将原有的凹多边形分割成相对数目较少的凸多边形，并通过控制~\ref*{sec:limit}中提到的修正值在效率和精准度之间做出平衡。
+
+图\ref*{small},\ref*{large}是修正值分别取0.5和1时的分割结果。可以看到，修正值较小时，这一步的切分较为保守，可以保留下相对更规整的凸多边形，同时避免了一部分判断失误而产生的错误划分。算法在运行本测试用例时消耗时间仅需40毫秒，其中修正值取1时运行时间相比修正值取0.5时减少约3毫秒。
+
+综合两图可以看到，经过这一步，多边形中的全部凹顶点均被分割为数个凸顶点，所有的多边形均被转化为凸多边形。接下来分别对每个位置调用Delaunay三角剖分算法即可得出最后对多边形三角化的结果。
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]
+        {figures/output2.png}
+        \caption{取较小修正值的结果}
+        \label{small}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]
+        {figures/output1.png}
+        \caption{取较大修正值的结果}
+        \label{large}
+    \end{minipage}
+\end{figure}
+
+
+
+与常用的耳切法等算法相比，本文的算法实现具有高效，准确，可自定义等多种优势，可以较好的解决多边形三角化的问题。
+
+
+
 % 通过在顶点上添加桥边和辅助节点，我们可以通过一次切割联通两个多边形孔洞，或是将一个多边形孔洞与外界相连。如图~\ref*{merge}所示，在添加额外的两个顶点和两条边后，两个多边形孔洞的边界将会合并为一个连续的环，而其代表的多边形区域不发生改变。由此，通过数次合并后，原有的带孔多边形将变为不含孔洞的凹多边形。
 % \section{预处理}
 % 为确保多边形孔洞合并后点的顺序正确，边界不产生交叉，需要提前对多边形孔洞的顶点方向进行预处理。
