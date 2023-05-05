@@ -73,7 +73,7 @@
 \renewcommand\cftsecafterpnum{\vskip3pt}
 \renewcommand\cftsubsecafterpnum{\vskip2pt}
 \setlength{\cftsecindent}{1.85em}
-\setlength{\cftsubsecindent}{1.85em}
+\setlength{\cftsubsecindent}{4.3em}
 \setlength{\cftsubsubsecindent}{1.85em}
 
 %%% ---- 图表标题设置 ----- %%%
